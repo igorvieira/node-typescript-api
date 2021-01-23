@@ -1,0 +1,24 @@
+{
+  "name": "typescript-api",
+  "version": "1.0.0",
+  "description": "Typescript Nodejs API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IgorVieira/node-typescript-api.git"
+  },
+  "keywords": [
+    "nodejs",
+    "typescript",
+    "api"
+  ],
+  "author": "Igor Vieira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IgorVieira/node-typescript-api/issues"
+  },
+  "homepage": "https://github.com/IgorVieira/node-typescript-api#readme"
+}
