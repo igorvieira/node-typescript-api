@@ -1,24 +1,23 @@
 import { StormGlass } from '@src/clients/stormGlass';
-import { Beach, BeachPosition } from '@src/models/beach';
 import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass_normalized_response_3_hours.json';
 import { Forecast, ForecastProcessingInternalError } from '../forecast';
+import { Beach, GeoPosition } from '@src/models/beach';
 
 jest.mock('@src/clients/stormGlass');
 
 describe('Forecast Service', () => {
-  const mockedStormGlassService = new StormGlass() as jest.Mocked<StormGlass>
-
+  const mockedStormGlassService = new StormGlass() as jest.Mocked<StormGlass>;
   it('should return the forecast for a list of beaches', async () => {
-    mockedStormGlassService.fetchPoints
-      .mockResolvedValue(stormGlassNormalizedResponseFixture);
-
+    mockedStormGlassService.fetchPoints.mockResolvedValue(
+      stormGlassNormalizedResponseFixture
+    );
     const beaches: Beach[] = [
       {
         lat: -33.792726,
         lng: 151.289824,
         name: 'Manly',
-        position: BeachPosition.E,
-        user: 'fake-id'
+        position: GeoPosition.E,
+        user: 'fake-id',
       },
     ];
     const expectedResponse = [
@@ -89,10 +88,10 @@ describe('Forecast Service', () => {
   });
 
   it('should return an empty list when the beaches array is empty', async () => {
-    const forecast = new Forecast()
-    const response = await forecast.processForecastForBeaches([])
-    expect(response).toEqual([])
-  })
+    const forecast = new Forecast();
+    const response = await forecast.processForecastForBeaches([]);
+    expect(response).toEqual([]);
+  });
 
   it('should throw internal processing error when something goes wrong during the rating process', async () => {
     const beaches: Beach[] = [
@@ -100,8 +99,8 @@ describe('Forecast Service', () => {
         lat: -33.792726,
         lng: 151.289824,
         name: 'Manly',
-        position: BeachPosition.E,
-        user: 'fake-id'
+        position: GeoPosition.E,
+        user: 'fake-id',
       },
     ];
     mockedStormGlassService.fetchPoints.mockRejectedValue(

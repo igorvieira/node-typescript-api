@@ -1,4 +1,4 @@
-import { Beach, BeachPosition } from '@src/models/beach';
+import { Beach, GeoPosition } from '@src/models/beach';
 import nock from 'nock';
 import stormGlassWeather3HoursFixture from '../fixtures/stormglass_weather_3_hours.json';
 import apiForecastResponse1BeachFixture from '../fixtures/api_forecast_response_1_beach.json';
@@ -11,18 +11,16 @@ describe('Beach forecast functional tests', () => {
     email: 'john3@mail.com',
     password: '1234',
   };
-
   let token: string;
   beforeEach(async () => {
     await Beach.deleteMany({});
     await User.deleteMany({});
     const user = await new User(defaultUser).save();
-
     const defaultBeach = {
       lat: -33.792726,
       lng: 151.289824,
       name: 'Manly',
-      position: BeachPosition.E,
+      position: GeoPosition.E,
       user: user.id,
     };
     await new Beach(defaultBeach).save();
@@ -49,6 +47,7 @@ describe('Beach forecast functional tests', () => {
       .get('/forecast')
       .set({ 'x-access-token': token });
     expect(status).toBe(200);
+    // Make sure we use toEqual to check value not the object and array itself
     expect(body).toEqual(apiForecastResponse1BeachFixture);
   });
 
