@@ -32,6 +32,8 @@ export class Forecast {
       const timeForecast = this.mapForecastByTime(beachForecast);
       return timeForecast.map((t) => ({
         time: t.time,
+        // TODO Allow ordering to be dynamic
+        // Sorts the beaches by its ratings
         forecast: _.orderBy(t.forecast, ['rating'], ['desc']),
       }));
     } catch (error) {
@@ -44,6 +46,7 @@ export class Forecast {
     logger.info(`Preparing the forecast for ${beaches.length} beaches`);
     for (const beach of beaches) {
       const rating = new this.RatingService(beach);
+      //TODO someone to make this call in parallel
       const points = await this.stormGlass.fetchPoints(beach.lat, beach.lng);
       const enrichedBeachData = this.enrichBeachData(points, beach, rating);
       pointsWithCorrectSources.push(...enrichedBeachData);
